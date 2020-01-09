@@ -4,7 +4,7 @@
 #
 Name     : libclc
 Version  : 9f6204ec04a8cadb6bef57caa71e3161c4f398f2
-Release  : 2
+Release  : 3
 URL      : https://github.com/llvm-mirror/libclc/archive/9f6204ec04a8cadb6bef57caa71e3161c4f398f2.tar.gz
 Source0  : https://github.com/llvm-mirror/libclc/archive/9f6204ec04a8cadb6bef57caa71e3161c4f398f2.tar.gz
 Summary  : Library requirements of the OpenCL C programming language
