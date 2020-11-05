@@ -4,13 +4,14 @@
 #
 Name     : libclc
 Version  : 9f6204ec04a8cadb6bef57caa71e3161c4f398f2
-Release  : 3
+Release  : 4
 URL      : https://github.com/llvm-mirror/libclc/archive/9f6204ec04a8cadb6bef57caa71e3161c4f398f2.tar.gz
 Source0  : https://github.com/llvm-mirror/libclc/archive/9f6204ec04a8cadb6bef57caa71e3161c4f398f2.tar.gz
 Summary  : Library requirements of the OpenCL C programming language
 Group    : Development/Tools
-License  : Apache-2.0
+License  : Apache-2.0 BSD-3-Clause MIT
 Requires: libclc-data = %{version}-%{release}
+Requires: libclc-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : llvm-dev
 
@@ -41,15 +42,24 @@ Requires: libclc = %{version}-%{release}
 dev components for the libclc package.
 
 
+%package license
+Summary: license components for the libclc package.
+Group: Default
+
+%description license
+license components for the libclc package.
+
+
 %prep
 %setup -q -n libclc-9f6204ec04a8cadb6bef57caa71e3161c4f398f2
+cd %{_builddir}/libclc-9f6204ec04a8cadb6bef57caa71e3161c4f398f2
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1559858104
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604617706
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -57,11 +67,11 @@ export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake ..
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}
 popd
 mkdir -p clr-build-avx2
 pushd clr-build-avx2
@@ -70,17 +80,19 @@ export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -march=haswell "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -march=haswell "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -march=haswell "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -march=haswell "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -march=haswell "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -march=haswell "
 export CFLAGS="$CFLAGS -march=haswell -m64"
 export CXXFLAGS="$CXXFLAGS -march=haswell -m64"
+export FFLAGS="$FFLAGS -march=haswell -m64"
+export FCFLAGS="$FCFLAGS -march=haswell -m64"
 %cmake ..
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}
 popd
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -89,8 +101,10 @@ cd ../clr-build-avx2;
 make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1559858104
+export SOURCE_DATE_EPOCH=1604617706
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/libclc
+cp %{_builddir}/libclc-9f6204ec04a8cadb6bef57caa71e3161c4f398f2/LICENSE.TXT %{buildroot}/usr/share/package-licenses/libclc/8737af83de0d40386dca9a4abe2b6faa83cb4750
 pushd clr-build-avx2
 %make_install_avx2  || :
 popd
@@ -444,3 +458,7 @@ popd
 /usr/include/clc/workitem/get_num_groups.h
 /usr/include/clc/workitem/get_work_dim.h
 /usr/lib64/pkgconfig/libclc.pc
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/libclc/8737af83de0d40386dca9a4abe2b6faa83cb4750
