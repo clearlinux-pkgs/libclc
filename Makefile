@@ -1,5 +1,5 @@
 PKG_NAME := libclc
-URL = https://github.com/llvm-mirror/libclc/archive/9f6204ec04a8cadb6bef57caa71e3161c4f398f2.tar.gz
+URL = https://github.com/llvm/llvm-project/releases/download/llvmorg-11.1.0/libclc-11.1.0.src.tar.xz
 ARCHIVES = 
 
 include ../common/Makefile.common
