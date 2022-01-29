@@ -6,7 +6,7 @@
 #
 Name     : libclc
 Version  : 11.1.0
-Release  : 6
+Release  : 7
 URL      : https://github.com/llvm/llvm-project/releases/download/llvmorg-11.1.0/libclc-11.1.0.src.tar.xz
 Source0  : https://github.com/llvm/llvm-project/releases/download/llvmorg-11.1.0/libclc-11.1.0.src.tar.xz
 Source1  : https://github.com/llvm/llvm-project/releases/download/llvmorg-11.1.0/libclc-11.1.0.src.tar.xz.sig
