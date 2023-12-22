@@ -10,7 +10,7 @@
 %define keepstatic 1
 Name     : libclc
 Version  : 17.0.6
-Release  : 12
+Release  : 13
 URL      : https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/libclc-17.0.6.src.tar.xz
 Source0  : https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/libclc-17.0.6.src.tar.xz
 Source1  : https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/libclc-17.0.6.src.tar.xz.sig
@@ -30,6 +30,7 @@ BuildRequires : zstd-dev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
+Patch1: datadir.patch
 
 %description
 libclc
@@ -60,13 +61,14 @@ license components for the libclc package.
 %prep
 %setup -q -n libclc-17.0.6.src
 cd %{_builddir}/libclc-17.0.6.src
+%patch -P 1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1703262752
+export SOURCE_DATE_EPOCH=1703269257
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -131,7 +133,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1703262752
+export SOURCE_DATE_EPOCH=1703269257
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libclc
 cp %{_builddir}/libclc-%{version}.src/LICENSE.TXT %{buildroot}/usr/share/package-licenses/libclc/8737af83de0d40386dca9a4abe2b6faa83cb4750 || :

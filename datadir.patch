@@ -1,0 +1,9 @@
+--- libclc-17.0.6.src/libclc.pc.in~	2023-11-28 08:52:28.000000000 +0000
++++ libclc-17.0.6.src/libclc.pc.in	2023-12-22 18:15:45.275547609 +0000
+@@ -1,5 +1,5 @@
+ includedir=@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_INCLUDEDIR@
+-libexecdir=@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_DATADIR@/clc
++libexecdir=/usr/lib64/clc
+ 
+ Name: libclc
+ Description: Library requirements of the OpenCL C programming language
