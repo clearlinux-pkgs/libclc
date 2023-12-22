@@ -10,14 +10,13 @@
 %define keepstatic 1
 Name     : libclc
 Version  : 17.0.6
-Release  : 11
+Release  : 12
 URL      : https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/libclc-17.0.6.src.tar.xz
 Source0  : https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/libclc-17.0.6.src.tar.xz
 Source1  : https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/libclc-17.0.6.src.tar.xz.sig
 Summary  : Library requirements of the OpenCL C programming language
 Group    : Development/Tools
 License  : Apache-2.0 BSD-3-Clause MIT
-Requires: libclc-data = %{version}-%{release}
 Requires: libclc-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : libedit-dev
@@ -40,18 +39,9 @@ requirements of the OpenCL C programming language, as specified by the
 OpenCL 1.1 Specification. The following sections of the specification
 impose library requirements:
 
-%package data
-Summary: data components for the libclc package.
-Group: Data
-
-%description data
-data components for the libclc package.
-
-
 %package dev
 Summary: dev components for the libclc package.
 Group: Development
-Requires: libclc-data = %{version}-%{release}
 Provides: libclc-devel = %{version}-%{release}
 Requires: libclc = %{version}-%{release}
 
@@ -76,7 +66,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1703261353
+export SOURCE_DATE_EPOCH=1703262752
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -95,7 +85,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-%cmake ..
+%cmake .. -DCMAKE_INSTALL_DATADIR:PATH=/usr/lib64
 make  %{?_smp_mflags}
 popd
 mkdir -p clr-build-avx2
@@ -120,7 +110,7 @@ CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
-%cmake ..
+%cmake .. -DCMAKE_INSTALL_DATADIR:PATH=/usr/lib64
 make  %{?_smp_mflags}
 popd
 
@@ -141,7 +131,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1703261353
+export SOURCE_DATE_EPOCH=1703262752
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libclc
 cp %{_builddir}/libclc-%{version}.src/LICENSE.TXT %{buildroot}/usr/share/package-licenses/libclc/8737af83de0d40386dca9a4abe2b6faa83cb4750 || :
@@ -155,73 +145,70 @@ popd
 
 %files
 %defattr(-,root,root,-)
-
-%files data
-%defattr(-,root,root,-)
-/usr/share/clc/amdgcn--amdhsa.bc
-/usr/share/clc/aruba-r600--.bc
-/usr/share/clc/barts-r600--.bc
-/usr/share/clc/bonaire-amdgcn--.bc
-/usr/share/clc/bonaire-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/caicos-r600--.bc
-/usr/share/clc/carrizo-amdgcn--.bc
-/usr/share/clc/carrizo-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/cayman-r600--.bc
-/usr/share/clc/cedar-r600--.bc
-/usr/share/clc/clspv--.bc
-/usr/share/clc/clspv64--.bc
-/usr/share/clc/cypress-r600--.bc
-/usr/share/clc/fiji-amdgcn--.bc
-/usr/share/clc/fiji-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/gfx900-amdgcn--.bc
-/usr/share/clc/gfx900-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/gfx902-amdgcn--.bc
-/usr/share/clc/gfx902-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/gfx904-amdgcn--.bc
-/usr/share/clc/gfx904-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/gfx906-amdgcn--.bc
-/usr/share/clc/gfx906-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/hainan-amdgcn--.bc
-/usr/share/clc/hainan-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/hawaii-amdgcn--.bc
-/usr/share/clc/hawaii-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/hemlock-r600--.bc
-/usr/share/clc/iceland-amdgcn--.bc
-/usr/share/clc/iceland-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/juniper-r600--.bc
-/usr/share/clc/kabini-amdgcn--.bc
-/usr/share/clc/kabini-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/kaveri-amdgcn--.bc
-/usr/share/clc/kaveri-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/mullins-amdgcn--.bc
-/usr/share/clc/mullins-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/nvptx--.bc
-/usr/share/clc/nvptx--nvidiacl.bc
-/usr/share/clc/nvptx64--.bc
-/usr/share/clc/nvptx64--nvidiacl.bc
-/usr/share/clc/oland-amdgcn--.bc
-/usr/share/clc/oland-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/palm-r600--.bc
-/usr/share/clc/pitcairn-amdgcn--.bc
-/usr/share/clc/pitcairn-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/polaris10-amdgcn--.bc
-/usr/share/clc/polaris10-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/polaris11-amdgcn--.bc
-/usr/share/clc/polaris11-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/redwood-r600--.bc
-/usr/share/clc/spirv-mesa3d-.spv
-/usr/share/clc/spirv64-mesa3d-.spv
-/usr/share/clc/stoney-amdgcn--.bc
-/usr/share/clc/stoney-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/sumo-r600--.bc
-/usr/share/clc/sumo2-r600--.bc
-/usr/share/clc/tahiti-amdgcn--.bc
-/usr/share/clc/tahiti-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/tonga-amdgcn--.bc
-/usr/share/clc/tonga-amdgcn-mesa-mesa3d.bc
-/usr/share/clc/turks-r600--.bc
-/usr/share/clc/verde-amdgcn--.bc
-/usr/share/clc/verde-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/amdgcn--amdhsa.bc
+/usr/lib64/clc/aruba-r600--.bc
+/usr/lib64/clc/barts-r600--.bc
+/usr/lib64/clc/bonaire-amdgcn--.bc
+/usr/lib64/clc/bonaire-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/caicos-r600--.bc
+/usr/lib64/clc/carrizo-amdgcn--.bc
+/usr/lib64/clc/carrizo-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/cayman-r600--.bc
+/usr/lib64/clc/cedar-r600--.bc
+/usr/lib64/clc/clspv--.bc
+/usr/lib64/clc/clspv64--.bc
+/usr/lib64/clc/cypress-r600--.bc
+/usr/lib64/clc/fiji-amdgcn--.bc
+/usr/lib64/clc/fiji-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/gfx900-amdgcn--.bc
+/usr/lib64/clc/gfx900-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/gfx902-amdgcn--.bc
+/usr/lib64/clc/gfx902-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/gfx904-amdgcn--.bc
+/usr/lib64/clc/gfx904-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/gfx906-amdgcn--.bc
+/usr/lib64/clc/gfx906-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/hainan-amdgcn--.bc
+/usr/lib64/clc/hainan-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/hawaii-amdgcn--.bc
+/usr/lib64/clc/hawaii-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/hemlock-r600--.bc
+/usr/lib64/clc/iceland-amdgcn--.bc
+/usr/lib64/clc/iceland-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/juniper-r600--.bc
+/usr/lib64/clc/kabini-amdgcn--.bc
+/usr/lib64/clc/kabini-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/kaveri-amdgcn--.bc
+/usr/lib64/clc/kaveri-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/mullins-amdgcn--.bc
+/usr/lib64/clc/mullins-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/nvptx--.bc
+/usr/lib64/clc/nvptx--nvidiacl.bc
+/usr/lib64/clc/nvptx64--.bc
+/usr/lib64/clc/nvptx64--nvidiacl.bc
+/usr/lib64/clc/oland-amdgcn--.bc
+/usr/lib64/clc/oland-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/palm-r600--.bc
+/usr/lib64/clc/pitcairn-amdgcn--.bc
+/usr/lib64/clc/pitcairn-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/polaris10-amdgcn--.bc
+/usr/lib64/clc/polaris10-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/polaris11-amdgcn--.bc
+/usr/lib64/clc/polaris11-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/redwood-r600--.bc
+/usr/lib64/clc/spirv-mesa3d-.spv
+/usr/lib64/clc/spirv64-mesa3d-.spv
+/usr/lib64/clc/stoney-amdgcn--.bc
+/usr/lib64/clc/stoney-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/sumo-r600--.bc
+/usr/lib64/clc/sumo2-r600--.bc
+/usr/lib64/clc/tahiti-amdgcn--.bc
+/usr/lib64/clc/tahiti-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/tonga-amdgcn--.bc
+/usr/lib64/clc/tonga-amdgcn-mesa-mesa3d.bc
+/usr/lib64/clc/turks-r600--.bc
+/usr/lib64/clc/verde-amdgcn--.bc
+/usr/lib64/clc/verde-amdgcn-mesa-mesa3d.bc
 
 %files dev
 %defattr(-,root,root,-)
