@@ -10,7 +10,7 @@
 %define keepstatic 1
 Name     : libclc
 Version  : 17.0.6
-Release  : 13
+Release  : 14
 URL      : https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/libclc-17.0.6.src.tar.xz
 Source0  : https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/libclc-17.0.6.src.tar.xz
 Source1  : https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/libclc-17.0.6.src.tar.xz.sig
