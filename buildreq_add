@@ -7,3 +7,4 @@ libedit-dev
 libxml2-dev
 zlib-dev
 ncurses-dev
+llvm
